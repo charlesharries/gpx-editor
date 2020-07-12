@@ -1,8 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+import './assets/css/main.css';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');
