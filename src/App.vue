@@ -9,12 +9,12 @@
     </div>
 
     <div class="App__map">
-      <base-map v-if="hasGPX" :points="points" />
+      <base-map v-if="hasGPX" :points="mapPoints" />
       <base-dropzone v-else @loaded="handleLoad" />
     </div>
 
     <main class="App__toolbox" v-if="hasGPX">
-      <base-toolbox :points="points" />
+      <base-toolbox :points="points" @toolbox:update="handleUpdate" />
     </main>
   </div>
 </template>
@@ -37,31 +37,32 @@ export default {
   },
 
   data: () => ({
-    gpx: null,
+    points: [],
   }),
 
   computed: {
     hasGPX() {
-      return this.gpx && this.gpx.length;
+      return this.points && this.points.length;
     },
 
-    points() {
-      const xml = convert.xml2js(this.gpx, { compact: true });
-
-      return xml.gpx.trk.trkseg.trkpt
-        .filter((p, i) => i % 7 === 0)
-        .map(pt => ({
-          time: pt.time,
-          lat: pt._attributes.lat,
-          lng: pt._attributes.lon,
-        }));
+    mapPoints() {
+      return this.points.filter((pt, i) => i % 10 === 0);
     },
   },
 
   methods: {
     handleLoad(file) {
-      console.log({ file });
-      this.gpx = file;
+      const xml = convert.xml2js(file, { compact: true });
+
+      this.points = xml.gpx.trk.trkseg.trkpt.map(pt => ({
+        time: pt.time,
+        lat: pt._attributes.lat,
+        lng: pt._attributes.lon,
+      }));
+    },
+
+    handleUpdate(ptsCount) {
+      this.points = this.points.slice(ptsCount[0], ptsCount[1]);
     },
   },
 };
