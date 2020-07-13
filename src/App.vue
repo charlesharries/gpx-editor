@@ -5,7 +5,16 @@
     </div>
 
     <div class="App__clear">
-      <button @click="gpx = null">Clear</button>
+      <button
+        class="button"
+        type="reset"
+        @click="
+          xml = null;
+          points = [];
+        "
+      >
+        Clear
+      </button>
     </div>
 
     <div class="App__map">
@@ -13,14 +22,21 @@
       <base-dropzone v-else @loaded="handleLoad" />
     </div>
 
-    <main class="App__toolbox" v-if="hasGPX">
+    <main class="App__toolbox stack" v-if="hasGPX">
       <base-toolbox :points="points" @toolbox:update="handleUpdate" />
+
+      <div>
+        <button type="button" class="button" @click="handleDownload">
+          Download
+        </button>
+      </div>
     </main>
   </div>
 </template>
 
 <script>
 import convert from 'xml-js';
+import download from 'downloadjs';
 import BaseMap from './components/BaseMap.vue';
 import BaseHeader from './components/BaseHeader.vue';
 import BaseDropzone from './components/BaseDropzone.vue';
@@ -38,6 +54,9 @@ export default {
 
   data: () => ({
     points: [],
+    xml: null,
+    start: 0,
+    end: 0,
   }),
 
   computed: {
@@ -46,23 +65,41 @@ export default {
     },
 
     mapPoints() {
-      return this.points.filter((pt, i) => i % 10 === 0);
+      return this.points
+        .map(pt => ({
+          time: pt.time,
+          lat: pt._attributes.lat,
+          lng: pt._attributes.lon,
+        }))
+        .slice(this.start, this.end)
+        .filter((pt, i) => i % 10 === 0);
     },
   },
 
   methods: {
     handleLoad(file) {
-      const xml = convert.xml2js(file, { compact: true });
+      this.xml = convert.xml2js(file, { compact: true });
 
-      this.points = xml.gpx.trk.trkseg.trkpt.map(pt => ({
-        time: pt.time,
-        lat: pt._attributes.lat,
-        lng: pt._attributes.lon,
-      }));
+      this.points = this.xml.gpx.trk.trkseg.trkpt;
     },
 
     handleUpdate(ptsCount) {
-      this.points = this.points.slice(ptsCount[0], ptsCount[1]);
+      this.start = ptsCount[0];
+      this.end = ptsCount[1];
+    },
+
+    handleDownload() {
+      const xml = { ...this.xml };
+      xml.gpx.trk.trkseg.trkpt = xml.gpx.trk.trkseg.trkpt.slice(
+        this.start,
+        this.end
+      );
+
+      download(
+        convert.js2xml(xml, { compact: true }),
+        'edited.gpx',
+        'application/gpx+xml'
+      );
     },
   },
 };
@@ -75,6 +112,7 @@ body {
 
 .App {
   position: relative;
+  --gap: 10px;
 }
 
 .App__map {
@@ -84,21 +122,27 @@ body {
 
 .App__header {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: var(--gap);
+  left: var(--gap);
   z-index: 1;
 }
 
 .App__clear {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: var(--gap);
+  right: var(--gap);
   z-index: 1;
 }
 
 .App__toolbox {
   position: absolute;
-  bottom: 50px;
-  left: 20px;
+  bottom: 40px;
+  left: var(--gap);
+  background: #333;
+  color: white;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: calc(100% - 2 * var(--gap));
+  box-sizing: border-box;
 }
 </style>

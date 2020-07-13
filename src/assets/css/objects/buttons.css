@@ -1,0 +1,23 @@
+.button {
+    appearance: none;
+    padding: 10px 20px;
+    color: white;
+    background: var(--off-black);
+    border: 1px solid var(--white);
+    font-family: var(--font);
+    font-size: 100%;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #222;
+}
+
+.button--danger {
+    background-color: crimson;
+}
+
+.button--danger:hover {
+    background-color: crimson;
+}

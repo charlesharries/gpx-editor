@@ -1,1 +1,11 @@
+/* Base */
 @import './base/reset.css';
+
+/* Settings */
+@import './settings/vars.css';
+@import './settings/fonts.css';
+@import './settings/utilities.css';
+@import './settings/dropzone.css';
+
+/* Objects */
+@import './objects/buttons.css';

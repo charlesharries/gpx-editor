@@ -1,6 +1,16 @@
 <template>
   <header class="Header">
-    <h1>GPX Editor</h1>
+    <h1 class="font-bold">GPX Editor</h1>
+    <p>
+      by
+      <a
+        href="https://twitter.com/CharlesHarries"
+        target="_blank"
+        rel="noopener noreferrer"
+        >@charlesharries</a
+      >
+    </p>
+    <p class="text-grey">v0.1.0</p>
   </header>
 </template>
 
@@ -12,8 +22,14 @@ export default {
 
 <style lang="postcss">
 .Header {
-  background-color: white;
+  background-color: var(--off-black);
+  color: var(--white);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   padding: 10px;
+  display: flex;
+}
+
+.Header > * + * {
+  margin-left: 10px;
 }
 </style>

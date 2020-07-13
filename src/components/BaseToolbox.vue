@@ -2,9 +2,13 @@
   <div class="Toolbox">
     <p>{{ points.length }} points</p>
 
-    <p>{{ range }}</p>
-
-    <vue-range-slider ref="slider" v-model="range" :min="0" :max="max" />
+    <vue-range-slider
+      ref="slider"
+      v-model="range"
+      :min="0"
+      :max="max"
+      :tooltip="false"
+    />
   </div>
 </template>
 
@@ -42,11 +46,8 @@ export default {
 };
 </script>
 
-<style>
-.Toolbox {
-  background: white;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  width: 800px;
+<style lang="postcss">
+.Toolbox > * + * {
+  margin-top: 10px;
 }
 </style>
