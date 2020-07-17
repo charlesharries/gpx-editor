@@ -78,9 +78,15 @@ export default {
 
   methods: {
     handleLoad(file) {
-      this.xml = convert.xml2js(file, { compact: true });
+      try {
+        this.xml = convert.xml2js(file, { compact: true });
 
-      this.points = this.xml.gpx.trk.trkseg.trkpt;
+        this.points = this.xml.gpx.trk.trkseg.trkpt;
+      } catch (err) {
+        this.xml = null;
+        this.points = [];
+        alert('not a valid gpx file there bud');
+      }
     },
 
     handleUpdate(ptsCount) {
