@@ -19,6 +19,7 @@ export default {
     options: {
       url: '/',
       maxFiles: 1,
+      maxFilesize: 10,
     },
   }),
 
