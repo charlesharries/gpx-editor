@@ -19,7 +19,7 @@
 
     <div class="App__map">
       <base-map v-if="hasGPX" :points="mapPoints" />
-      <base-dropzone v-else @loaded="handleLoad" />
+      <base-dropzone v-else @loaded="handleLoad" :key="reset" />
     </div>
 
     <main class="App__toolbox stack" v-if="hasGPX">
@@ -57,6 +57,7 @@ export default {
     xml: null,
     start: 0,
     end: 0,
+    reset: 0,
   }),
 
   computed: {
@@ -85,6 +86,7 @@ export default {
       } catch (err) {
         this.xml = null;
         this.points = [];
+        this.reset = this.reset + 1;
         alert('not a valid gpx file there bud');
       }
     },
