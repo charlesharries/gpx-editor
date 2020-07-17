@@ -1,24 +1,15 @@
-# gpx-editor
+# GPX Editor
 
-## Project setup
-```
-yarn install
-```
+Extremely simple GPX editor. Lets you cut points off the beginning or end of your track.
 
-### Compiles and hot-reloads for development
+## Local dev
+
 ```
-yarn serve
+$ yarn dev
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+...and build:
 
-### Lints and fixes files
 ```
-yarn lint
+$ yarn build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
