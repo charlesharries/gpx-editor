@@ -10,7 +10,7 @@
         >@charlesharries</a
       >
     </p>
-    <p class="text-grey">v0.1.0</p>
+    <p class="text-grey">v0.1.1</p>
   </header>
 </template>
 
