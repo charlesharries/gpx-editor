@@ -58,6 +58,7 @@ export default {
     start: 0,
     end: 0,
     reset: 0,
+    coefficient: 30,
   }),
 
   computed: {
@@ -73,7 +74,7 @@ export default {
           lng: pt._attributes.lon,
         }))
         .slice(this.start, this.end)
-        .filter((pt, i) => i % 10 === 0);
+        .filter((pt, i) => i % this.coefficient === 0);
     },
   },
 

@@ -7,10 +7,11 @@
         href="https://twitter.com/CharlesHarries"
         target="_blank"
         rel="noopener noreferrer"
-        >@charlesharries</a
       >
+        @charlesharries
+      </a>
     </p>
-    <p class="text-grey">v0.1.1</p>
+    <p class="text-grey">v0.2.0</p>
   </header>
 </template>
 
